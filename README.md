@@ -1,0 +1,1 @@
+# Data-Reductancy-algorithm-with-tkinterui
