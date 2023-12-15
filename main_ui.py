@@ -15,7 +15,7 @@ class FolderApp:
         self.result=[]
         self.root = root
         self.root.title("Folder Selection App")
-        self.root.geometry("650x600")
+        self.root.geometry("850x600")
 
         # main frame
         main_frame = tk.Frame(root)
@@ -48,6 +48,10 @@ class FolderApp:
         # Right Frame for displaying DataFrame
         self.right_frame = tk.Frame(main_frame, height=left_frame.winfo_reqheight())
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        result_label=tk.Label(self.root,text="Table will show files paths of duplicate  files ")
+        result_label.pack()         
+            
+
         
         
  
@@ -60,6 +64,7 @@ class FolderApp:
         self.canvas = tk.Canvas(root, width=400, height=300, scrollregion=(0, 0, 500, 500))
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+
         self.frame = tk.Frame(self.canvas)
         self.canvas.create_window((0, 0), window=self.frame, anchor='nw')
         #
@@ -68,18 +73,18 @@ class FolderApp:
                         
 
         # Add scrollbars to the canvas
-        x_scrollbar = tk.Scrollbar(root, orient=tk.HORIZONTAL, command=self.canvas.xview)
-        x_scrollbar.pack(side=tk.LEFT, fill=tk.X,ipadx=2,expand=True)
-        y_scrollbar = tk.Scrollbar(root, orient=tk.VERTICAL, command=self.canvas.yview)
-        y_scrollbar.pack(side=tk.TOP, fill=tk.Y, expand=True)
+        x_scrollbar = tk.Scrollbar(self.canvas, orient=tk.HORIZONTAL, command=self.canvas.xview)
+        x_scrollbar.pack(side=tk.TOP, fill=tk.X)
+        y_scrollbar = tk.Scrollbar(self.canvas, orient=tk.VERTICAL, command=self.canvas.yview)
+        y_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
 
         self.canvas.configure(xscrollcommand=x_scrollbar.set, yscrollcommand=y_scrollbar.set)
         self.canvas.bind('<Configure>', on_configure)
         
         
        #button to delete all double copies
-        btn  = tk.Button(root,text="delete all copies",command=self.delete_all_copies(self.result)) 
-        btn.pack(side=tk.RIGHT)              
+        btn  = tk.Button(self.canvas,text="delete all copies",bd=5,command=self.delete_all_copies(self.result)) 
+        btn.pack()              
         
 
         root.mainloop()
@@ -120,6 +125,7 @@ class FolderApp:
             tk.messagebox.showinfo("Error", "Please choose both folders first.")
 
     def display_dataframe(self, df):
+
         for widget in self.right_frame.winfo_children():
             widget.destroy()
         tree = ttk.Treeview(self.right_frame)
@@ -134,6 +140,8 @@ class FolderApp:
             else:
                 tree.column(col, anchor="c", width=150)
             tree.heading(col, text=col)
+        df_label=tk.Label(self.right_frame,text="files paths of file having same characters count")
+        df_label.pack()
 
         y_scrollbar = ttk.Scrollbar(self.right_frame, orient="vertical", command=tree.yview)
         y_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
