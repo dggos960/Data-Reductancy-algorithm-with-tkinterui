@@ -28,15 +28,3 @@ def find_duplicates_within_groups(file_groups):
 
     return duplicates
 
-'''
-# Example usage:
-file_groups = [
-    ("path1.1", "path1.2"),
-    ("path2.1", "path2.2"),
-    # Add more pairs as needed
-]
-
-duplicates = find_duplicates_within_groups(file_groups)
-print("Duplicate files within groups:")
-for group in duplicates:
-    print(group)'''
